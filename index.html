@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NOOR ELITE</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;600&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --deep: #022c22; --emerald: #065f46; --gold: #b45309; }
+        body { 
+            background: radial-gradient(circle at top right, #064e3b, #022c22); 
+            font-family: 'Inter', sans-serif;
+            color: #ecfdf5; min-height: 100vh; margin: 0;
+        }
+        .font-quran { font-family: 'Scheherazade New', serif; direction: rtl; }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .noor-input { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); color: white; }
+        .gold-glow { text-shadow: 0 0 15px rgba(180, 83, 9, 0.6); }
+        .custom-scroll::-webkit-scrollbar { width: 5px; height: 5px; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: #b45309; border-radius: 10px; }
+        .gem-btn { transition: all 0.3s ease; }
+        .gem-btn:hover { background: rgba(251, 191, 36, 0.2); border-color: rgba(251, 191, 36, 0.5); }
+    </style>
+</head>
+<body class="p-4 lg:p-10">
+
+    <div class="max-w-7xl mx-auto space-y-6">
+        
+        <header class="flex flex-col md:flex-row justify-between items-center bg-black/30 p-8 rounded-[2.5rem] border border-white/5">
+            <div>
+                <h1 class="text-4xl font-serif font-bold gold-glow text-amber-500">🌙 NOOR <span class="text-white opacity-90 text-2xl ml-2">ELITE</span></h1>
+                <p id="hijri-date" class="text-[10px] tracking-[0.4em] uppercase opacity-50 mt-2 font-bold">Loading Hijri Calendar...</p>
+            </div>
+            <div class="mt-4 md:mt-0 bg-white/5 px-6 py-3 rounded-2xl border border-white/10 text-center">
+                <p class="text-[9px] uppercase opacity-40 mb-1">Current Goal</p>
+                <p class="font-bold text-emerald-400">Finish Juz 30</p>
+            </div>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            
+            <div class="lg:col-span-4 space-y-8">
+                
+                <div class="glass p-6 rounded-[2.5rem] shadow-lg border-l-4 border-emerald-500">
+                    <h2 class="text-xs tracking-[0.3em] uppercase opacity-50 mb-2 font-bold">Dua of the Day</h2>
+                    <p id="daily-dua" class="text-sm font-semibold text-amber-100 italic leading-relaxed"></p>
+                </div>
+
+                <div class="glass p-8 rounded-[3rem] shadow-2xl">
+                    <h2 class="text-xl font-bold mb-6 flex items-center gap-3 text-amber-500">
+                        🕒 <span class="border-b-2 border-amber-600 pb-1 uppercase text-sm tracking-widest">Salah Times</span>
+                    </h2>
+                    <div id="prayer-list" class="space-y-4">
+                        <div class="animate-pulse flex justify-between px-2"><span>Fetching times...</span></div>
+                    </div>
+                </div>
+
+                <div class="glass p-8 rounded-[3rem] flex flex-col h-[400px] border-t-4 border-amber-600">
+                    <h2 class="font-bold mb-4 text-emerald-400 text-xs tracking-[0.3em] uppercase">Noor Intelligence</h2>
+                    <div id="chat-display" class="flex-1 overflow-y-auto custom-scroll space-y-4 pr-3 mb-6 text-sm">
+                        <div class="bg-emerald-900/40 p-4 rounded-2xl rounded-tl-none border border-emerald-500/20">
+                            Assalamu Alaikum. Ask me your questions about the Deen.
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <input id="user-input" type="text" placeholder="Ask here..." 
+                               class="w-full noor-input p-4 rounded-2xl outline-none focus:ring-2 focus:ring-amber-600 transition pr-14 text-sm">
+                        <button onclick="askNoor()" class="absolute right-3 top-2.5 bg-amber-600 p-2 rounded-xl hover:bg-amber-500 transition shadow-lg">🚀</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-8 space-y-8">
+                
+                <div class="glass p-8 rounded-[3rem] shadow-lg">
+                    <h2 class="text-xs tracking-[0.3em] uppercase text-emerald-400 mb-4 font-bold">Islamic Gems</h2>
+                    <div class="flex gap-3 overflow-x-auto custom-scroll pb-4">
+                        <button onclick="showGem('dhikr')" class="gem-btn px-5 py-2 rounded-full border border-white/20 text-xs font-bold uppercase tracking-wider whitespace-nowrap">Dhikr</button>
+                        <button onclick="showGem('justice')" class="gem-btn px-5 py-2 rounded-full border border-white/20 text-xs font-bold uppercase tracking-wider whitespace-nowrap">Justice</button>
+                        <button onclick="showGem('love')" class="gem-btn px-5 py-2 rounded-full border border-white/20 text-xs font-bold uppercase tracking-wider whitespace-nowrap">Love</button>
+                        <button onclick="showGem('problems')" class="gem-btn px-5 py-2 rounded-full border border-white/20 text-xs font-bold uppercase tracking-wider whitespace-nowrap">Problems</button>
+                        <button onclick="showGem('forgiveness')" class="gem-btn px-5 py-2 rounded-full border border-white/20 text-xs font-bold uppercase tracking-wider whitespace-nowrap">Forgiveness</button>
+                        <button onclick="showGem('access')" class="gem-btn px-5 py-2 rounded-full border border-white/20 text-xs font-bold uppercase tracking-wider whitespace-nowrap">Access</button>
+                        <button onclick="showGem('money')" class="gem-btn px-5 py-2 rounded-full border border-white/20 text-xs font-bold uppercase tracking-wider whitespace-nowrap">Money</button>
+                        <button onclick="showGem('lies')" class="gem-btn px-5 py-2 rounded-full border border-white/20 text-xs font-bold uppercase tracking-wider whitespace-nowrap">Lies</button>
+                    </div>
+                    <div class="mt-4 bg-black/20 p-5 rounded-2xl border border-white/5 min-h-[80px] flex items-center justify-center text-center">
+                        <p id="gem-display" class="text-amber-500 font-serif text-lg italic">"Select a gem above to find peace in the Quran."</p>
+                    </div>
+                </div>
+
+                <div class="glass p-6 lg:p-12 rounded-[3.5rem] shadow-2xl h-[700px] flex flex-col relative">
+                    <div class="flex flex-col sm:flex-row justify-between items-center mb-10 gap-6">
+                        <div class="flex items-center gap-4">
+                            <h2 class="text-3xl font-serif font-bold gold-glow">The Holy Quran</h2>
+                            <span id="rank-badge" class="bg-amber-600/20 text-amber-500 text-[10px] px-3 py-1 rounded-full font-bold uppercase tracking-tighter border border-amber-600/30">Seeker</span>
+                        </div>
+                        <select id="surah-select" onchange="loadSurah(this.value)" 
+                                class="w-full sm:w-auto bg-emerald-900/60 border border-white/10 rounded-2xl px-6 py-3 font-bold text-white outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer text-sm">
+                        </select>
+                    </div>
+
+                    <div id="quran-scroll" class="flex-1 overflow-y-auto custom-scroll pr-6" onscroll="trackProgress()">
+                        <div id="quran-text" class="font-quran text-5xl lg:text-6xl text-right space-y-20 leading-[6.5rem] py-10 opacity-90"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed bottom-10 right-10 group">
+        <button onclick="tasbih()" class="w-24 h-24 rounded-full bg-gradient-to-tr from-emerald-950 to-emerald-700 border-4 border-white/10 shadow-2xl flex flex-col items-center justify-center active:scale-90 transition transform hover:-translate-y-2">
+            <span id="t-count" class="text-3xl font-black text-amber-500">0</span>
+            <span class="text-[8px] uppercase font-bold tracking-widest opacity-60">Dhikr</span>
+        </button>
+    </div>
+
+    <script>
+        const MY_KEY = "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";
+        let tVal = 0;
+        let versesRead = 0;
+
+        const gemsData = {
+            dhikr: '"So remember Me; I will remember you." — 2:152',
+            justice: '"O you who have believed, be persistently standing firm in justice..." — 4:135',
+            love: '"And He has placed between you affection and mercy." — 30:21',
+            problems: '"For indeed, with hardship [will be] ease." — 94:5-6',
+            forgiveness: '"Do not despair of the mercy of Allah. Indeed, Allah forgives all sins." — 39:53',
+            access: '"And whoever fears Allah - He will make for him a way out." — 65:2',
+            money: '"And there is no creature on earth but that upon Allah is its provision..." — 11:6',
+            lies: '"Woe to every sinful liar." — 45:7'
+        };
+
+        const duas = [
+            '"O Allah, I ask You for beneficial knowledge..."',
+            '"O Allah, You are Forgiving and love forgiveness..."',
+            '"O Controller of the hearts, make my heart firm..."',
+            '"O Allah, grant us the good of this world and the hereafter..."',
+            '"O Allah, I seek refuge in You from anxiety and sorrow..."',
+            '"My Lord, build for me near You a house in Paradise."',
+            '"O Allah, help me to remember You and perform worship beautifully."'
+        ];
+
+        function showGem(category) {
+            document.getElementById('gem-display').innerText = gemsData[category];
+        }
+
+        function trackProgress() {
+            const container = document.getElementById('quran-scroll');
+            const badge = document.getElementById('rank-badge');
+            const scrollPercent = (container.scrollTop / (container.scrollHeight - container.clientHeight)) * 100;
+            
+            if (scrollPercent > 90) { badge.innerText = "Master"; badge.style.color = "#fbbf24"; }
+            else if (scrollPercent > 60) { badge.innerText = "Scholar"; badge.style.color = "#34d399"; }
+            else if (scrollPercent > 30) { badge.innerText = "Student"; badge.style.color = "#60a5fa"; }
+            else { badge.innerText = "Seeker"; }
+        }
+
+        async function init() {
+            document.getElementById('daily-dua').innerText = duas[new Date().getDay()];
+            try {
+                const res = await fetch(`https://api.aladhan.com/v1/timingsByAddress?address=Elephant%20and%20Castle,%20London,%20UK&method=2`);
+                const d = await res.json();
+                document.getElementById('hijri-date').innerText = `${d.data.date.hijri.day} ${d.data.date.hijri.month.en} ${d.data.date.hijri.year} AH`;
+                const prayers = ['Fajr', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'];
+                document.getElementById('prayer-list').innerHTML = prayers.map(p => `
+                    <div class="flex justify-between items-center p-4 rounded-2xl bg-white/5 border border-white/5 group hover:bg-amber-600/20 transition-all">
+                        <span class="opacity-40 group-hover:opacity-100 text-[10px] font-bold uppercase">${p}</span>
+                        <span class="text-2xl font-black">${d.data.timings[p]}</span>
+                    </div>
+                `).join('');
+            } catch (e) { console.log("Prayer Load Error"); }
+
+            const sRes = await fetch('https://api.quran.com/api/v4/chapters');
+            const sData = await sRes.json();
+            document.getElementById('surah-select').innerHTML = sData.chapters.map(c => 
+                `<option value="${c.id}">${c.id}. ${c.name_simple}</option>`
+            ).join('');
+            loadSurah(1);
+        }
+
+        async function loadSurah(id) {
+            const txt = document.getElementById('quran-text');
+            txt.innerHTML = '<div class="text-center animate-pulse opacity-20 py-20 uppercase tracking-[0.5em]">Revealing...</div>';
+            const res = await fetch(`https://api.quran.com/api/v4/quran/verses/indopak?chapter_number=${id}`);
+            const d = await res.json();
+            txt.innerHTML = d.verses.map(v => `<p class="hover:text-amber-500 transition duration-700 cursor-pointer">${v.text_indopak}</p>`).join('');
+            document.getElementById('quran-scroll').scrollTo({top: 0, behavior: 'smooth'});
+            document.getElementById('rank-badge').innerText = "Seeker";
+        }
+
+        async function askNoor() {
+            const input = document.getElementById('user-input');
+            const display = document.getElementById('chat-display');
+            const q = input.value;
+            if(!q) return;
+
+            display.innerHTML += `<div class="bg-white/10 p-4 rounded-2xl text-right text-xs mb-4">${q}</div>`;
+            input.value = '';
+            display.scrollTop = display.scrollHeight;
+
+            try {
+                const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+                    method: "POST",
+                    headers: { "Authorization": `Bearer ${MY_KEY}`, "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        model: "llama3-8b-8192",
+                        messages: [{ role: "system", content: "Short, factual Islamic answers." }, { role: "user", content: q }]
+                    })
+                });
+                const data = await res.json();
+                display.innerHTML += `<div class="bg-amber-600/15 p-5 rounded-2xl text-sm mb-4">🌙 ${data.choices[0].message.content}</div>`;
+            } catch (e) { display.innerHTML += `<div class="text-red-400">Error.</div>`; }
+            display.scrollTop = display.scrollHeight;
+        }
+
+        function tasbih() {
+            tVal++;
+            document.getElementById('t-count').innerText = tVal;
+            if("vibrate" in navigator) navigator.vibrate(40);
+        }
+
+        init();
+    </script>
+</body>
+</html>
